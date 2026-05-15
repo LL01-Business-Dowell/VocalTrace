@@ -5,6 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: "/VocalTrace/",
+
   server: {
     host: "::",
     port: 3000,
@@ -12,20 +14,25 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     allowedHosts: [
-      'www.medsignqr.uxlivinglab.org',
-      'medsignqr.uxlivinglab.org',
-      'localhost'
+      "www.medsignqr.uxlivinglab.org",
+      "medsignqr.uxlivinglab.org",
+      "localhost",
     ],
-    // proxy for local development
+
     proxy: {
-      '/api': {
-        target: 'http://backend:5000',
+      "/api": {
+        target: "http://backend:5000",
         changeOrigin: true,
         secure: false,
-      }
-    }
+      },
+    },
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+
+  plugins: [
+    react(),
+    mode === "development" && componentTagger(),
+  ].filter(Boolean),
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
