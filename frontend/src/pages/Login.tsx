@@ -5,8 +5,9 @@ import { adminAPI } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ScanLine, ArrowRight, Loader2 } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
 import { z } from 'zod';
+import TransparentLogo from '@/assets/TransparentLogo.png';
 
 const mobileSchema = z.string().min(10, 'Enter a valid mobile number').max(15).regex(/^\d+$/, 'Numbers only');
 
@@ -14,7 +15,7 @@ export default function Login() {
   const [mobile, setMobile] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -43,7 +44,7 @@ export default function Login() {
         sessionStorage.setItem('mobile', JSON.stringify(facilityDetails.mobile));
 
         toast({ title: 'Welcome back!', description: `Signed in as ${facilityDetails.facilityName}` });
-        navigate('/medical/facility/scanner');
+        navigate('/facility/scanner');
       } else {
         navigate('/medical/facility/register', { state: { mobile } });
       }
@@ -57,13 +58,24 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-4">
       <div className="w-full max-w-sm space-y-8 animate-slide-up">
+        
         {/* Logo */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl medical-gradient shadow-lg mb-4">
-            <ScanLine className="w-8 h-8 text-primary-foreground" />
+        <div className="text-center space-y-3">
+          <img
+            src={TransparentLogo}
+            alt="VocalTrace Logo"
+            className="w-70 h-auto object-contain mx-auto mb-4"
+          />
+
+          <div>
+            {/* <h1 className="text-2xl font-display font-bold text-foreground">
+              VocalTrace
+            </h1> */}
+
+            <h1 className="text-smfont-display text-foreground">
+              Prescription management for medical professionals
+            </h1>
           </div>
-          <h1 className="text-2xl font-display font-bold text-foreground">MedSignQR</h1>
-          <p className="text-sm text-muted-foreground">Prescription management for medical professionals</p>
         </div>
 
         {/* Form */}

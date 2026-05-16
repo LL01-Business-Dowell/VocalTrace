@@ -9,7 +9,7 @@ const Index = () => {
 
   useEffect(() => {
     if (!loading && user) {
-      navigate('/medical/scanner', { replace: true });
+      navigate('/facility/scanner', { replace: true });
     }
   }, [user, loading, navigate]);
 

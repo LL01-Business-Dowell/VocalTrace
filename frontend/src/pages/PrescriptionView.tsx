@@ -39,8 +39,9 @@ export default function PrescriptionView() {
     const [retryMessage, setRetryMessage] = useState('');
     
     // The URL encoded in the QR code — points to the public patient-facing MedicineReport page
-    const reportUrl = medId
-        ? `${window.location.origin}/medical/${medId}`
+    const scannedId = sessionStorage.getItem('scannedId');
+    const reportUrl = scannedId
+        ? `${window.location.origin}/medical/?id=${scannedId}`
         : '';
 
     useEffect(() => {

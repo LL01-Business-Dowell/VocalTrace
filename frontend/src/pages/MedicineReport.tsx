@@ -7,6 +7,7 @@ import {
   ImageIcon,
   Mic,
   CheckCircle2,
+  Clipboard,
   ScanLine,
   User,
   Calendar,
@@ -15,16 +16,26 @@ import {
   Loader2,
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import TransparentLogo from '@/assets/TransparentLogo.png';
+
 
 
 /* ─── Loading skeleton ─────────────────────────────────────────────────────── */
 function LoadingSkeleton() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-blue-600 text-white py-4 px-4 shadow-md flex items-center gap-2">
-        <ScanLine className="w-5 h-5" />
-        <span className="font-bold text-lg">MedSignQR</span>
-        <span className="text-xs opacity-75 ml-auto">Prescription Report</span>
+      <header className="bg-blue-600 text-white py-4 px-4 shadow-md flex items-center">
+        <div className="flex items-center gap-3">
+          <img
+            src={TransparentLogo}
+            alt="VocalTrace Logo"
+            className="w-32 h-auto object-contain"
+          />
+
+          <div className="flex flex-col leading-tight">
+            <span className="font-bold text-lg">Prescription Report</span>
+          </div>
+        </div>
       </header>
       <main className="flex-1 flex flex-col items-center justify-center gap-6 p-6">
         <Loader2 className="w-10 h-10 text-blue-500 animate-spin" />
@@ -38,9 +49,18 @@ function LoadingSkeleton() {
 function ErrorState({ message }: { message: string }) {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-blue-600 text-white py-4 px-4 shadow-md flex items-center gap-2">
-        <ScanLine className="w-5 h-5" />
-        <span className="font-bold text-lg">MedSignQR</span>
+      <header className="bg-blue-600 text-white py-4 px-4 shadow-md flex items-center">
+        <div className="flex items-center gap-3">
+          <img
+            src={TransparentLogo}
+            alt="VocalTrace Logo"
+            className="w-32 h-auto object-contain"
+          />
+
+          <div className="flex flex-col leading-tight">
+            <span className="font-bold text-lg">Prescription Report</span>
+          </div>
+        </div>
       </header>
       <main className="flex-1 flex flex-col items-center justify-center p-6 text-center gap-4">
         <div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
@@ -73,13 +93,14 @@ export default function MedicineReport() {
     }
     const decryptId = async (id: string) => {
       const result = await adminAPI.decryptId(id);
+      
       if (result.success && result.decryptedId) {
           if (result.decryptedId.qr_id == null) {
             toast({
               title: 'No Prescription Found',
               description: `Incomplete QR code. Please check the QR code and try again.`,
             });
-            navigate(`/medical/facility/scanner`);
+            // navigate(`/medical/facility/scanner`);
           } else {
             const medId = result.decryptedId.qr_id;
             return medId;
@@ -163,11 +184,20 @@ export default function MedicineReport() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* ── Header ── */}
-      <header className="bg-blue-600 text-white py-4 px-4 shadow-md">
-        <div className="max-w-lg mx-auto flex items-center gap-2">
-          <ScanLine className="w-5 h-5" />
-          <span className="font-bold text-lg tracking-tight">MedSignQR</span>
-          <span className="text-xs opacity-75 ml-auto">Prescription Report</span>
+      <header className="bg-blue-600 text-white py-4 px-4 shadow-md flex items-center">
+        <div className="flex items-center gap-3">
+          <img
+            src={TransparentLogo}
+            alt="VocalTrace Logo"
+            className="w-32 h-auto object-contain"
+          />
+
+          <div className="flex flex-col leading-tight">
+            <span className="font-bold text-lg">Prescription Report</span>
+            <span className="text-xs opacity-80">
+              ID: {id}
+            </span>
+          </div>
         </div>
       </header>
 
@@ -274,6 +304,18 @@ export default function MedicineReport() {
             >
               Your browser does not support audio playback.
             </audio>
+            {med.audioTranscript && (
+                <div className="space-y-2">
+                    <div className="flex items-center gap-1 text-xs text-primary font-medium">
+                        <Clipboard className="w-3 h-3" />
+                        <h2 className="text-sm font-bold text-slate-700">Audio Transcript</h2>
+                    </div>
+
+                    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">
+                        {med.audioTranscript}
+                    </div>
+                </div>
+            )}
           </div>
         )}
 
@@ -293,7 +335,7 @@ export default function MedicineReport() {
 
         {/* ── Footer ── */}
         <div className="pt-2 border-t border-slate-200 text-center space-y-1">
-          <p className="text-xs text-slate-400 font-medium">Generated by MedSignQR</p>
+          <p className="text-xs text-slate-400 font-medium">Powered by UX Living Lab</p>
           <p className="text-xs text-slate-400">
             For questions about this prescription, contact your healthcare provider directly.
           </p>

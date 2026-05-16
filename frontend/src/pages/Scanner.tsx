@@ -79,6 +79,7 @@ export default function Scanner() {
       console.log(scannedValue)
       
       const id = new URL(scannedValue).searchParams.get('id');
+      sessionStorage.setItem('scannedId', JSON.stringify(id));
       const result = await adminAPI.decryptId(id);
       if (result.success && result.decryptedId) {
         setStatus('Checking prescription status...');
