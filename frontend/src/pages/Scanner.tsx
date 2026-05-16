@@ -89,13 +89,13 @@ export default function Scanner() {
             title: 'No Prescription Found',
             description: `Incomplete QR code. Please check the QR code and try again.`,
           });
-          navigate(`/medical/facility/scanner`);
+          navigate(`/facility/scanner`);
         } else {
           const medId = result.decryptedId.qr_id;
           console.log("This is the decrypted QR ID:", medId);
           sessionStorage.setItem('medId', JSON.stringify(medId));
           toast({ title: 'QR Scanned', description: 'Redirecting to patient lookup...' });
-          navigate(`/medical/facility/patients/${medId}`);
+          navigate(`/facility/patients/${medId}`);
         }
       } else {
         toast({
@@ -108,7 +108,7 @@ export default function Scanner() {
     } catch {
       // If not a valid URL, still navigate to patients
       toast({ title: 'QR Scanned', description: 'Redirecting to patient lookup...' });
-      navigate('/medical/facility/patients');
+      navigate('/facility/patients');
     }
     setLoading(false);
   };
