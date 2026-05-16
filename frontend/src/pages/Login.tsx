@@ -46,7 +46,7 @@ export default function Login() {
         toast({ title: 'Welcome back!', description: `Signed in as ${facilityDetails.facilityName}` });
         navigate('/facility/scanner');
       } else {
-        navigate('/medical/facility/register', { state: { mobile } });
+        navigate('/facility/register', { state: { mobile } });
       }
     } catch {
       toast({ title: 'Error', description: 'Network error. Please try again.', variant: 'destructive' });

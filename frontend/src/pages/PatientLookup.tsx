@@ -71,7 +71,7 @@ export default function PatientLookup() {
     const handleNewPrescription = () => {
         // Pass patientId and cached metadataDocs via navigation state so PrescriptionForm
         // can perform the safe fetch-append-update without re-fetching
-        navigate(`/medical/facility/prescriptions/new/${medId ?? 'new'}`, {
+        navigate(`/facility/prescriptions/new/${medId ?? 'new'}`, {
             state: {
                 patientId: searchedPatientId,
                 cachedMetadataDocs: metadataDocs,

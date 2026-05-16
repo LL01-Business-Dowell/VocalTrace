@@ -374,11 +374,11 @@ export default function PrescriptionForm() {
             });
 
             if (finalize) {
-                navigate(`/medical/facility/prescriptions/${patientId.trim()}/${newMedicineId}`, {
+                navigate(`/facility/prescriptions/${patientId.trim()}/${newMedicineId}`, {
                     state: { justFinalized: true },
                 });
             } else {
-                navigate('/medical/facility/dashboard');
+                navigate('/facility/dashboard');
             }
         } else {
             toast({ title: 'Save failed', description: errorMessage, variant: 'destructive' });
@@ -587,14 +587,14 @@ export default function PrescriptionForm() {
                 <div className="grid grid-cols-2 gap-3 pb-6">
                     <Btn
                         variant="destructive"
-                        onClick={() => navigate('/medical/facility/dashboard')}
+                        onClick={() => navigate('/facility/dashboard')}
                         className="h-12 border-red-100"
                     >
                         <XCircle className="w-4 h-4" /> Cancel & Report
                     </Btn>
                     <Btn
                         variant="outline"
-                        onClick={() => navigate('/medical/facility/dashboard')}
+                        onClick={() => navigate('/facility/dashboard')}
                         className="h-12 border-slate-200"
                     >
                         <LogOut className="w-4 h-4" /> Exit Without Saving

@@ -41,7 +41,7 @@ export default function PrescriptionView() {
     // The URL encoded in the QR code — points to the public patient-facing MedicineReport page
     const scannedId = sessionStorage.getItem('scannedId');
     const reportUrl = scannedId
-        ? `${window.location.origin}/medical/?id=${scannedId}`
+        ? `${window.location.origin}/?id=${scannedId}`
         : '';
 
     useEffect(() => {
@@ -384,7 +384,7 @@ export default function PrescriptionView() {
                 <Button
                     variant="outline"
                     className="w-full py-3"
-                    onClick={() => navigate('/medical/facility/scanner')}
+                    onClick={() => navigate('/facility/scanner')}
                 >
                     Return to Dashboard
                 </Button>

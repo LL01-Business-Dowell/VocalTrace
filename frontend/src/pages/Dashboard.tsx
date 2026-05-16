@@ -45,7 +45,7 @@ export default function Dashboard() {
         {/* Quick Actions */}
         <div className="grid grid-cols-2 gap-3">
           <button
-            onClick={() => navigate('/medical/facility/scanner')}
+            onClick={() => navigate('/facility/scanner')}
             className="medical-gradient-subtle rounded-xl p-4 text-left border border-primary/10 hover:border-primary/30 transition-colors group"
           >
             <ScanLine className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
@@ -53,7 +53,7 @@ export default function Dashboard() {
             <div className="text-xs text-muted-foreground">Scan medicine code</div>
           </button>
           <button
-            onClick={() => navigate('/medical/facility/prescriptions/new')}
+            onClick={() => navigate('/facility/prescriptions/new')}
             className="bg-card rounded-xl p-4 text-left border border-border hover:border-primary/30 transition-colors group"
           >
             <Plus className="w-6 h-6 text-primary mb-2 group-hover:scale-110 transition-transform" />
@@ -105,11 +105,11 @@ export default function Dashboard() {
                       </p>
                     </div>
                     {rx.status === 'DRAFT' ? (
-                      <Button variant="outline" size="sm" onClick={() => navigate(`/medical/facility/prescriptions/${rx.id}/edit`)}>
+                      <Button variant="outline" size="sm" onClick={() => navigate(`/facility/prescriptions/${rx.id}/edit`)}>
                         <Pencil className="w-3.5 h-3.5 mr-1" /> Edit
                       </Button>
                     ) : (
-                      <Button variant="ghost" size="sm" onClick={() => navigate(`/medical/facility/prescriptions/${rx.id}`)}>
+                      <Button variant="ghost" size="sm" onClick={() => navigate(`/facility/prescriptions/${rx.id}`)}>
                         <Eye className="w-3.5 h-3.5 mr-1" /> View
                       </Button>
                     )}

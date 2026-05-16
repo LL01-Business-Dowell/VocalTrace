@@ -100,7 +100,7 @@ export default function MedicineReport() {
               title: 'No Prescription Found',
               description: `Incomplete QR code. Please check the QR code and try again.`,
             });
-            // navigate(`/medical/facility/scanner`);
+            // navigate(`/facility/scanner`);
           } else {
             const medId = result.decryptedId.qr_id;
             return medId;
