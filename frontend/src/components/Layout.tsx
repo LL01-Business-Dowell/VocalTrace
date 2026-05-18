@@ -2,6 +2,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { LogOut, Home, ScanLine, FileText, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import TransparentLogo from '@/assets/TransparentLogo.png';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const { user, logout } = useAuth();
@@ -22,9 +23,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Header */}
       <header className="medical-gradient text-primary-foreground sticky top-0 z-50 shadow-md">
         <div className="container flex items-center justify-between h-14 px-4">
-          <button onClick={() => navigate('/dashboard')} className="flex items-center gap-2 font-display font-bold text-lg tracking-tight">
-            <ScanLine className="w-5 h-5" />
-            MediScan
+          <button onClick={() => navigate('/facility/dashboard')} className="flex items-center gap-2 font-display font-bold text-lg tracking-tight">
+            <img
+            src={TransparentLogo}
+            alt="VocalTrace Logo"
+            className="w-32 h-auto object-contain"
+          />
           </button>
 
           {/* Desktop nav */}

@@ -21,7 +21,7 @@ type FormData = z.infer<typeof schema>;
 
 export default function Register() {
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  // const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { toast } = useToast();
@@ -40,15 +40,13 @@ export default function Register() {
         ...data, 
         facilityId: facilityId
       });
-      // console.log("User:", user);
-      const userData = user.data
-      // login(userData);
+      // console.log("data:", data);
       sessionStorage.setItem('facilityId', JSON.stringify(facilityId))
       sessionStorage.setItem('facilityName', JSON.stringify(data.facilityName));
       sessionStorage.setItem('mobile', JSON.stringify(data.mobile));
 
-      toast({ title: 'Registration successful', description: `Welcome, ${userData.facilityName}!` });
-      navigate('/medical/facility/dashboard');
+      toast({ title: 'Registration successful', description: `Welcome, ${data.facilityName}!` });
+      navigate('/facility/scanner');
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : 'Registration failed';
       toast({ title: 'Error', description: msg, variant: 'destructive' });
