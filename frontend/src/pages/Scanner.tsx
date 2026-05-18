@@ -79,7 +79,7 @@ export default function Scanner() {
       console.log(scannedValue)
       
       const id = new URL(scannedValue).searchParams.get('id');
-      sessionStorage.setItem('scannedId', JSON.stringify(id));
+      sessionStorage.setItem('scannedId', id);
       const result = await adminAPI.decryptId(id);
       if (result.success && result.decryptedId) {
         setStatus('Checking prescription status...');
@@ -93,7 +93,7 @@ export default function Scanner() {
         } else {
           const medId = result.decryptedId.qr_id;
           console.log("This is the decrypted QR ID:", medId);
-          sessionStorage.setItem('medId', JSON.stringify(medId));
+          sessionStorage.setItem('medId', medId);
           toast({ title: 'QR Scanned', description: 'Redirecting to patient lookup...' });
           navigate(`/facility/patients/${medId}`);
         }

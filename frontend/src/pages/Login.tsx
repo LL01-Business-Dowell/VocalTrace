@@ -39,9 +39,9 @@ export default function Login() {
         const facilityDetails = user.facilityDetails[0]
         
         console.log("This is the facility details:",facilityDetails);
-        sessionStorage.setItem('facilityId', JSON.stringify(facilityDetails.facilityId))
-        sessionStorage.setItem('facilityName', JSON.stringify(facilityDetails.facilityName));
-        sessionStorage.setItem('mobile', JSON.stringify(facilityDetails.mobile));
+        sessionStorage.setItem('facilityId', facilityDetails.facilityId)
+        sessionStorage.setItem('facilityName', facilityDetails.facilityName);
+        sessionStorage.setItem('mobile', facilityDetails.mobile);
 
         toast({ title: 'Welcome back!', description: `Signed in as ${facilityDetails.facilityName}` });
         navigate('/facility/scanner');

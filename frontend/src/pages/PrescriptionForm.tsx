@@ -226,6 +226,7 @@ export default function PrescriptionForm() {
     const audioChunksRef = useRef<Blob[]>([]);
     const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
     const [imageBlob, setImageBlob] = useState<Blob | null>(null);
+    const [isTranscribing, setIsTranscribing] = useState(false);
 
     // Dispensing dialog state
     const [showDispensingDialog, setShowDispensingDialog] = useState(false);
@@ -330,6 +331,7 @@ export default function PrescriptionForm() {
         const status = finalize ? 'FINALIZED' : 'DRAFT';
         let transcript = '';
         if (finalize && medicine.audioBlob) {
+            setIsTranscribing(true);
             try {
                 const audioFileName = `prescription-audio-${Date.now()}.webm`
                 const S3UploadRes = await AWSAPI.uploadAudioToS3(medicine.audioBlob, audioFileName);
@@ -347,6 +349,8 @@ export default function PrescriptionForm() {
                     description: 'Prescription will still be saved.',
                     variant: 'destructive',
                 });
+            } finally {
+                setIsTranscribing(false);
             }
         }
         const medicinePayload = {
@@ -575,6 +579,23 @@ export default function PrescriptionForm() {
                     </div>
                 </div>
 
+                {/* Transcription Loader */}
+                {isTranscribing && (
+                    <div className="flex items-center gap-3 rounded-2xl border border-blue-200 bg-blue-50 px-4 py-4">
+                        <Loader2 className="w-5 h-5 text-blue-600 animate-spin shrink-0" />
+
+                        <div className="space-y-1">
+                            <p className="text-sm font-semibold text-blue-900">
+                                Transcribing audio instructions...
+                            </p>
+
+                            <p className="text-xs text-blue-700">
+                                Please wait while the voice note is processed.
+                            </p>
+                        </div>
+                    </div>
+                )}
+
                 {/* Error banner */}
                 {saveStatus === 'error' && errorMessage && (
                     <div className="flex items-center gap-2 rounded-xl bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-700">
@@ -616,7 +637,7 @@ export default function PrescriptionForm() {
                     <Btn
                         variant="emerald"
                         onClick={() => handleSave(true)}
-                        disabled={saving}
+                        disabled={saving || isTranscribing}
                         className="h-12 shadow-lg shadow-emerald-100"
                     >
                         {saving ? (
