@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { a } from 'vitest/dist/chunks/suite.d.FvehnV49.js';
 
 
 export default function PrescriptionView() {
@@ -41,9 +42,9 @@ export default function PrescriptionView() {
     // The URL encoded in the QR code — points to the public patient-facing MedicineReport page
     const scannedId = sessionStorage.getItem('scannedId');
     const reportUrl = scannedId
-        ? `${window.location.origin}/?id=${scannedId}`
+        ? `${window.location.origin}/VocalTrace/?id=${scannedId}`
         : '';
-
+    
     useEffect(() => {
         if (!medId) {
             setError('No prescription ID provided.');
@@ -66,13 +67,31 @@ export default function PrescriptionView() {
 
                 if (res.success && res.prescription) {
                     // console.log('Prescription loaded:', res);
-                    const imageSignedUrl = await facilityAPI.getFileSignedUrl(res.prescription[0]?.imageFileId);
-                    const audioSignedUrl = await facilityAPI.getFileSignedUrl(res.prescription[0]?.audioFileId);
-                    res.prescription[0].transcriptReviewStatus = res.prescription[0]?.transcriptReviewStatus || 'PENDING';
-                    res.prescription[0].imageUrl = `${import.meta.env.VITE_DATACUBE_DOMAIN}${imageSignedUrl.signedUrl}`;
-                    res.prescription[0].audioUrl = `${import.meta.env.VITE_DATACUBE_DOMAIN}${audioSignedUrl.signedUrl}`;
                     console.log('Prescription: ', res.prescription[0]);
-                    setRx(res.prescription[0]);
+                    const prescription = res.prescription[0];
+
+                    if (prescription.imageFileId) {
+                        const imageSignedUrl = await facilityAPI.getFileSignedUrl(
+                            prescription.imageFileId
+                        );
+
+                        prescription.imageUrl =
+                            `https://datacube.uxlivinglab.online${imageSignedUrl.signedUrl}`;
+                    }
+
+                    if (prescription.audioFileId) {
+                        
+                        const audioSignedUrl = await facilityAPI.getFileSignedUrl(
+                        prescription.audioFileId
+                    );
+
+                        const url = `https://datacube.uxlivinglab.online${audioSignedUrl.signedUrl}`;
+                        prescription.audioUrl = url;
+
+                    } 
+                    
+                    prescription.transcriptReviewStatus = prescription?.transcriptReviewStatus || 'PENDING';
+                    setRx(prescription);
                     setLoading(false);
                     setRetryMessage('');
                     return;
@@ -295,7 +314,10 @@ export default function PrescriptionView() {
                                     <div className="flex items-center gap-1 text-xs text-primary font-medium">
                                         <Mic className="w-3 h-3" /> Audio Instructions
                                     </div>
-                                    <audio controls className="w-full" src={`${med.audioUrl}`}>
+                                    <audio controls className="w-full" src={med.audioUrl}>
+                                        <source src={med.audioUrl} type="audio/webm" />
+                                        <source src={med.audioUrl} type="audio/mp3" />
+                                        <source src={med.audioUrl} type="audio/ogg" />
                                         Your browser does not support the audio element.
                                     </audio>
 

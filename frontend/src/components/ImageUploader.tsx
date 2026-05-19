@@ -76,7 +76,7 @@ export const ImageUploader = ({ existingImageBlob, onImageSelected }: ImageUploa
                 <div className="relative rounded-xl overflow-hidden border border-border">
                     <img
                         src={previewUrl}
-                        alt="Garment preview"
+                        alt="Medicine preview"
                         className="w-full h-48 object-cover"
                     />
                     <Button
@@ -109,7 +109,7 @@ export const ImageUploader = ({ existingImageBlob, onImageSelected }: ImageUploa
                             <ImageIcon className="w-6 h-6 text-muted-foreground" />
                         </div>
                         <div>
-                            <p className="font-medium text-sm">Upload garment image</p>
+                            <p className="font-medium text-sm">Upload medicine image</p>
                             <p className="text-xs text-muted-foreground">
                                 Drag & drop or click to browse
                             </p>

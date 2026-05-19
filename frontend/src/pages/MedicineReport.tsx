@@ -81,7 +81,7 @@ export default function MedicineReport() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [imageUrl, setImageUrl] = useState<string | null>(null);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
+  const [audioFileUrl, setAudioFileUrl] = useState<string | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -141,7 +141,7 @@ export default function MedicineReport() {
         const file = await facilityAPI.getFileSignedUrl(rx.imageFileId);
         const imageSignedUrl = file.signedUrl;
         // console.log("Fetched image signed URL:", imageSignedUrl);
-        setImageUrl(`${import.meta.env.VITE_DATACUBE_DOMAIN}${imageSignedUrl}`);
+        setImageUrl(`https://datacube.uxlivinglab.online${imageSignedUrl}`);
       }
     } catch (error) {
       console.error("Error fetching image:", error);
@@ -160,7 +160,7 @@ export default function MedicineReport() {
         const file = await facilityAPI.getFileSignedUrl(rx.audioFileId);
         const audioSignedUrl = file.signedUrl;
         // console.log("Fetched audio signed URL:", audioSignedUrl);
-        setAudioUrl(`${import.meta.env.VITE_DATACUBE_DOMAIN}${audioSignedUrl}`);
+        setAudioFileUrl(`https://datacube.uxlivinglab.online${audioSignedUrl}`);
       }
     } catch (error) {
       console.error("Error fetching audio:", error);
@@ -299,7 +299,7 @@ export default function MedicineReport() {
               controls
               controlsList="nodownload"
               className="w-full rounded-lg"
-              src={audioUrl}
+              src={audioFileUrl}
               style={{ height: '48px' }}
             >
               Your browser does not support audio playback.

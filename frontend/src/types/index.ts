@@ -22,7 +22,7 @@ export interface Medicine {
   medId: string;
   name: string;
   dosage: string;
-  notes: string;
+  notes?: string;
   audioUrl?: string;
   imageUrl?: string;
   audioBlob?: Blob;
